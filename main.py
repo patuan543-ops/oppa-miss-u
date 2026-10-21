@@ -22,7 +22,7 @@ def keep_alive():
     t.daemon = True
     t.start()
 
-client = discord.Client(intents=discord.Intents.default())
+client = discord.Client()
 
 @client.event
 async def on_ready():
