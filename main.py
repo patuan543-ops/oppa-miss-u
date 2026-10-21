@@ -7,7 +7,6 @@ TOKEN = os.getenv("TOKEN", "").strip()
 ASSET_ID = "1562365327784935454"
 APP_ID = 1101687357900898304
 
-# === WEB SERVER (Keep Alive) ===
 app = Flask('')
 
 @app.route('/')
@@ -20,9 +19,9 @@ def run_web():
 
 def keep_alive():
     t = threading.Thread(target=run_web)
+    t.daemon = True
     t.start()
 
-# === DISCORD BOT ===
 client = discord.Client(intents=discord.Intents.default())
 
 @client.event
