@@ -10,6 +10,9 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"Bot is running!")
+    def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
 
 def run_web():
     port = int(os.environ.get("PORT", 8080))
@@ -25,8 +28,16 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    # status code
-    print(f"Treo thanh cong {client.user}")
+    print(f"Da login: {client.user}")
+    try:
+        activity = discord.Activity(
+            type=discord.ActivityType.listening, 
+            name="I Miss You Oppa"
+        )
+        await client.change_presence(activity=activity)
+        print("Da set status thanh cong!")
+    except Exception as e:
+        print(f"Loi set status: {e}")
 
 if __name__ == "__main__":
     keep_alive()
