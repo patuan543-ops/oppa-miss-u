@@ -1,7 +1,7 @@
 import discord, os, threading, http.server, socketserver
 
 TOKEN = os.getenv("TOKEN","").strip()
-IMG_ID = "1562365327784935454"
+IMAGE_URL = "https://cdn.discordapp.com/emojis/1562365327784935454.png"
 
 def keep_alive():
     PORT = int(os.environ.get("PORT", 10000))
@@ -12,6 +12,7 @@ def keep_alive():
 threading.Thread(target=keep_alive, daemon=True).start()
 
 client = discord.Client()
+
 @client.event
 async def on_ready():
     activity = discord.Activity(
@@ -20,9 +21,9 @@ async def on_ready():
         details="I Miss You Oppa",
         state="I Miss You Oppa",
         assets={
-            "large_image": IMG_ID,
+            "large_image": IMAGE_URL,
             "large_text": "I Miss You Oppa",
-            "small_image": IMG_ID,
+            "small_image": IMAGE_URL,
             "small_text": "VR"
         },
         buttons=[
