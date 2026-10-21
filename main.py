@@ -25,6 +25,4 @@ async def on_ready():
         },
         timestamps={"start": int(time.time())}
     )
-    await client.change_presence(activity=activity)
-
-client.run(USER_TOKEN)
+    await cli
