@@ -1,9 +1,22 @@
 import discord
 import os
 import time
+from threading import Thread
+from flask import Flask
 
 USER_TOKEN = os.getenv("TOKEN")
 APP_ID = 1562365327784935454
+
+# Fake web server để Render không báo lỗi No open ports
+app = Flask('')
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+Thread(target=run_web, daemon=True).start()
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -25,4 +38,6 @@ async def on_ready():
         },
         timestamps={"start": int(time.time())}
     )
-    await cli
+    await client.change_presence(activity=activity)
+
+client.run(USER_TOKEN)
