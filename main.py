@@ -1,23 +1,33 @@
-import discord, os
+import discord
+import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-TOKEN = os.getenv("TOKEN","").strip()
-APP_ID = 1101687357900898304
-ASSET_ID = "1562365327784935454"
+TOKEN = os.getenv("TOKEN", "").strip()
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running!")
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(('0.0.0.0', port), Handler)
+    server.serve_forever()
+
+def keep_alive():
+    t = threading.Thread(target=run_web)
+    t.daemon = True
+    t.start()
 
 client = discord.Client()
 
 @client.event
 async def on_ready():
-    activity = discord.Activity(
-        type=discord.ActivityType.listening,
-        name="I Miss You Oppa",
-        application_id=APP_ID,
-        assets={
-            "large_image": ASSET_ID,
-            "large_text": "Meow"
-        }
-    )
-    await client.change_presence(activity=activity)
+    # status code
     print(f"Treo thanh cong {client.user}")
 
-client.run(TOKEN)
+if __name__ == "__main__":
+    keep_alive()
+    client.run(TOKEN)
