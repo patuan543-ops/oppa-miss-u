@@ -1,2 +1,2 @@
-discord.py
-Flask
+discord.py-self
+flask
