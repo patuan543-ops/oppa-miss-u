@@ -29,9 +29,3 @@ async def on_ready():
         },
         buttons=[
             {"label": "guns.lol", "url": "https://guns.lol/fym5"}
-        ]
-    )
-    await client.change_presence(activity=activity)
-    print(f"Da treo co anh {client.user}")
-
-client.run(TOKEN)
