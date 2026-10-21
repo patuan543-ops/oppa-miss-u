@@ -4,7 +4,7 @@ import time
 from threading import Thread
 from flask import Flask
 
-USER_TOKEN = os.getenv("TOKEN")
+USER_TOKEN = os.getenv("TOKEN", "").strip()
 APP_ID = 1562365327784935454
 
 app = Flask('')
@@ -22,20 +22,6 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    activity = discord.Activity(
-        type=discord.ActivityType.playing,
-        name="Oppa Miss U",
-        details="Playing on VR",
-        state="guns.lol/fym5",
-        application_id=APP_ID,
-        assets={
-            "large_image": "cat",
-            "large_text": "Oppa Miss U",
-            "small_image": "vr",
-            "small_text": "VR"
-        },
-        timestamps={"start": int(time.time())}
-    )
-    await client.change_presence(activity=activity)
+    print(f"Logged in as {client.user}")
 
 client.run(USER_TOKEN)
