@@ -1,10 +1,28 @@
 import discord
 import os
+import threading
+from flask import Flask
 
 TOKEN = os.getenv("TOKEN", "").strip()
 ASSET_ID = "1562365327784935454"
 APP_ID = 1101687357900898304
 
+# === WEB SERVER (Keep Alive) ===
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = threading.Thread(target=run_web)
+    t.start()
+
+# === DISCORD BOT ===
 client = discord.Client(intents=discord.Intents.default())
 
 @client.event
@@ -26,4 +44,6 @@ async def on_ready():
     await client.change_presence(activity=activity)
     print(f"Treo thanh cong {client.user}")
 
-client.run(TOKEN)
+if __name__ == "__main__":
+    keep_alive()
+    client.run(TOKEN)
