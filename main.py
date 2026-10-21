@@ -1,9 +1,6 @@
-import discord, os, base64
+import discord, os
 
 TOKEN = os.getenv("TOKEN","").strip()
-IMG = "https://i.imgur.com/8Km9tFF.jpeg"
-IMG_MP = f"mp:external/{base64.b64encode(IMG.encode()).decode().replace('=','').replace('/','_').replace('+','-')}"
-
 client = discord.Client()
 
 @client.event
@@ -13,18 +10,12 @@ async def on_ready():
         name="I Miss You Oppa",
         details="I Miss You Oppa",
         state="I Miss You Oppa",
-        application_id=1101687357900898304,
         assets={
-            "large_image": IMG_MP,
-            "large_text": "I Miss You Oppa",
-            "small_image": IMG_MP,
-            "small_text": "Oppa"
-        },
-        buttons=[
-            {"label": "guns.lol", "url": "https://guns.lol/fym5"}
-        ]
+            "large_image": "https://i.imgur.com/8Km9tFF.jpeg",
+            "large_text": "I Miss You Oppa"
+        }
     )
     await client.change_presence(activity=activity)
-    print(f"Treo thanh cong {client.user} - I Miss You Oppa + anh + guns.lol")
+    print(f"Treo thanh cong {client.user}")
 
 client.run(TOKEN)
