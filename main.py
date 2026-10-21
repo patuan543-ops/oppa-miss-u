@@ -1,7 +1,7 @@
 import discord, os, threading, http.server, socketserver
 
 TOKEN = os.getenv("TOKEN","").strip()
-IMAGE_URL = "https://i.imgur.com/4M34hi2.png"
+IMAGE_URL = "https://i.imgur.com/8Km9tFF.jpeg"
 
 def keep_alive():
     PORT = int(os.environ.get("PORT", 10000))
@@ -17,18 +17,18 @@ client = discord.Client()
 async def on_ready():
     activity = discord.Activity(
         type=discord.ActivityType.playing,
-        name="I Miss You Oppa",
-        state="I Miss You Oppa",
+        name="I Miss You",
         details="I Miss You Oppa",
+        state="I Miss You Oppa",
         application_id=1234567890123456789,
         assets={
             "large_image": IMAGE_URL,
             "large_text": "I Miss You Oppa",
             "small_image": IMAGE_URL,
-            "small_text": "VR"
+            "small_text": "Oppa"
         },
         buttons=[
-            {"label": "Gun.lol", "url": "https://guns.lol/fym5"}
+            {"label": "guns.lol", "url": "https://guns.lol/fym5"}
         ]
     )
     await client.change_presence(activity=activity)
