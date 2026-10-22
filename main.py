@@ -34,8 +34,9 @@ async def on_ready():
             type=discord.ActivityType.listening, 
             name="I Miss You Oppa"
         )
-        await client.change_presence(activity=activity)
-        print("Da set status thanh cong!")
+        # Thêm status=discord.Status.dnd để bật chế độ Không làm phiền
+        await client.change_presence(status=discord.Status.dnd, activity=activity)
+        print("Da set status DND thanh cong!")
     except Exception as e:
         print(f"Loi set status: {e}")
 
