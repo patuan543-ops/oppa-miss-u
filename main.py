@@ -1,46 +1,12 @@
-import discord
-import os
-import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import discord, os
 
-TOKEN = os.getenv("TOKEN", "").strip()
-
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"Bot is running!")
-    def do_HEAD(self):
-        self.send_response(200)
-        self.end_headers()
-
-def run_web():
-    port = int(os.environ.get("PORT", 8080))
-    print(f"[WEB] Starting web server on port {port}")
-    server = HTTPServer(('0.0.0.0', port), Handler)
-    server.serve_forever()
-
-def keep_alive():
-    t = threading.Thread(target=run_web)
-    t.daemon = True
-    t.start()
+TOKEN = os.getenv("TOKEN","").strip()
 
 client = discord.Client()
 
 @client.event
 async def on_ready():
-    print(f"[BOT] Da login: {client.user}")
-    try:
-        activity = discord.Activity(
-            type=discord.ActivityType.listening, 
-            name="I Miss You Oppa"
-        )
-        await client.change_presence(status=discord.Status.dnd, activity=activity)
-        print("[BOT] Da set status DND thanh cong!")
-    except Exception as e:
-        print(f"[BOT] Loi set status: {e}")
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="I Miss You Oppa"))
+    print(f"Treo thanh cong {client.user} - Khong bao gio exit!")
 
-if __name__ == "__main__":
-    print("[START] Dang khoi dong bot...")
-    keep_alive()
-    client.run(TOKEN)
+client.run(TOKEN)
